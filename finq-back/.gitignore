@@ -1,0 +1,7 @@
+# Packages
+node_modules/
+
+.env
+
+# Built dist
+dist
