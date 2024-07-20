@@ -5,7 +5,7 @@ services:
     image: postgres:12.19
     container_name: postgres_container
     env_file:
-      - ./finq-back/.env
+      - .env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

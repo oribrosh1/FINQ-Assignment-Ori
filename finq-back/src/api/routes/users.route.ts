@@ -5,10 +5,30 @@ import { connection } from "../../lib/db";
 import { User } from "../entities/user.entity";
 const usersRouter = Router();
 
-usersRouter.get("/users/history", async (req, res) => {
+usersRouter.get("/saved-users", async (req, res) => {
   try {
     const users = await connection.manager.find(User);
-    res.json(users);
+    res.json(users.map(user => ({
+      user: {
+        login: {
+          uuid: user.id
+        },
+        picture: {
+          thumbnail: user.thumbnail
+        },
+        name: {
+          title: user.title,
+          first: user.firstName,
+          last: user.lastName,
+        },
+        location: {
+          country: user.country,
+        },
+        email: user.email,
+        gender: user.gender,
+        phone: user.phone
+      }
+    })));
   } catch (err) {
     logger.error(err);
     res.status(500).json({ error: "failed to retrieve users" });
@@ -19,7 +39,8 @@ usersRouter.get("/users/history", async (req, res) => {
 usersRouter.post("/users/save-user", async (req, res) => {
   const userRepository = connection.getRepository(User);
   try {
-    const userData = req.body;
+    const userData = req.body.data;
+    const id = req.body.userId;
 
     const user = new User();
     user.title = userData.title;
