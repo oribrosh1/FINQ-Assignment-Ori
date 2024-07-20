@@ -39,10 +39,17 @@ usersRouter.get("/saved-users", async (req, res) => {
 usersRouter.post("/users/save-user", async (req, res) => {
   const userRepository = connection.getRepository(User);
   try {
+
     const userData = req.body.data;
     const id = req.body.userId;
+    const thumbnail = req.body.thumbnail;
+    const country = req.body.country;
 
     const user = new User();
+    user.id = userData.id;
+    user.thumbnail = userData.thumbnail;
+    user.country = userData.country;
+
     user.title = userData.title;
     user.firstName = userData.first;
     user.lastName = userData.last;
