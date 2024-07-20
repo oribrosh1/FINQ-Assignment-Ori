@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import { getUsers } from "../services/users.service";
 import { logger } from "../../lib/logger";
 import { connection } from "../../lib/db";
 import { User } from "../entities/user.entity";
 const usersRouter = Router();
 
-usersRouter.get("/saved-users", async (req, res) => {
+usersRouter.get("/saved-users", async (req: Request, res: Response) => {
   try {
     const users = await connection.manager.find(User);
     res.json(users.map(user => ({
@@ -36,7 +36,7 @@ usersRouter.get("/saved-users", async (req, res) => {
 });
 
 
-usersRouter.post("/users/save-user", async (req, res) => {
+usersRouter.post("/users/save-user", async (req: Request, res: Response) => {
   const userRepository = connection.getRepository(User);
   try {
 
@@ -75,7 +75,7 @@ usersRouter.post("/users/save-user", async (req, res) => {
   }
 });
 
-usersRouter.put("/update-user/:userId", async (req, res) => {
+usersRouter.put("/update-user/:userId", async (req: Request, res: Response) => {
   const { userId } = req.params;
   const { title, first, last } = req.body;
 
@@ -103,7 +103,7 @@ usersRouter.put("/update-user/:userId", async (req, res) => {
 });
 
 
-usersRouter.delete("/delete-user/:userId", async (req, res) => {
+usersRouter.delete("/delete-user/:userId", async (req: Request, res: Response) => {
   const { userId } = req.params;  // Extracting the user ID from the URL parameter
 
   const userRepository = connection.getRepository(User);
@@ -125,7 +125,7 @@ usersRouter.delete("/delete-user/:userId", async (req, res) => {
   }
 });
 
-usersRouter.get("/users/:limit", async (req, res) => {
+usersRouter.get("/users/:limit", async (req: Request, res: Response) => {
   try {
     let { limit } = req.params as {
       [x in string]: any;

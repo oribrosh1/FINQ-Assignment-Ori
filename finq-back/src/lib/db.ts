@@ -15,6 +15,9 @@ const dbConfig: PostgresConnectionOptions = {
   migrations: ["dist/src/migration/**/*.ts"],
 };
 
+console.log(dbConfig);
+
+
 async function postgresConnect(): Promise<DataSource> {
   const ds = new DataSource(dbConfig);
   await ds.initialize();
