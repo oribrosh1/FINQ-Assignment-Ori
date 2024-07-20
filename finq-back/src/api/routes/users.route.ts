@@ -46,9 +46,9 @@ usersRouter.post("/users/save-user", async (req, res) => {
     const country = req.body.country;
 
     const user = new User();
-    user.id = userData.id;
-    user.thumbnail = userData.thumbnail;
-    user.country = userData.country;
+    user.id = id;
+    user.thumbnail = thumbnail;
+    user.country = country;
 
     user.title = userData.title;
     user.firstName = userData.first;
